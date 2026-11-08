@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/raymondmaca055-gif/GymApp#readme",
   "dependencies": {
+    "dotenv": "^18.0.9",
     "mongoose": "^9.12.0"
   }
 }
