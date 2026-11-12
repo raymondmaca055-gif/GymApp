@@ -1,62 +1,94 @@
 require('dotenv').config();
+const express = require('express');
 const mongoose = require('mongoose');
-// Import the models we created in models.js
-const { Member, Trainer, Booking } = require('./models');
+const cors = require('cors');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
-const mongoURI = process.env.MONGO_URI;
+// Import your Member model from models.js
+const { Member } = require('./models');
 
-mongoose.connect(mongoURI)
-  .then(async () => {
-    console.log('🚀 Connected to MongoDB Atlas successfully!');
+const app = express();
 
-    // Run our database tests inside a clean try/catch block
+// Middleware: Allows HTML pages to send JSON data to this server
+app.use(cors());
+app.use(express.json());
+
+// Connect to MongoDB Atlas
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('✅ Connected to MongoDB Atlas!'))
+  .catch(err => console.error('❌ Database connection error:', err));
+
+// ==========================================
+// ROUTE 1: REGISTER A NEW MEMBER OR ADMIN
+// ==========================================
+app.post('/api/register', async (req, res) => {
     try {
-        // ==========================================
-        // 1. CREATE (Insert Data)
-        // ==========================================
+        const { name, email, password, role } = req.body;
+
+        // 1. Check if email already exists
+        const existingUser = await Member.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: 'Email is already registered.' });
+        }
+
+        // 2. Scramble the password before saving
+        const passwordHash = await bcrypt.hash(password, 10);
+
+        // 3. Create and save the new user
         const newMember = await Member.create({
-            name: "Alice Walker",
-            email: "alice@gym.com",
-            membershipType: "Premium"
+            name,
+            email,
+            passwordHash,
+            role: role || 'member' // Defaults to 'member' unless 'admin' is sent
         });
-        console.log(`✅ Successfully inserted member: ${newMember.name}`);
 
-        // ==========================================
-        // 2. READ (Find Data)
-        // ==========================================
-        // Find ALL premium members
-        const premiumMembers = await Member.find({ membershipType: "Premium" });
-        console.log('\n--- Premium Gym Members ---');
-        console.log(premiumMembers);
-
-        // Find ONE specific member by their email
-        const singleMember = await Member.findOne({ email: "alice@gym.com" });
-        console.log(`\n🔍 Found single member: ${singleMember.name}`);
-
-        // ==========================================
-        // 3. UPDATE (Modify Data)
-        // ==========================================
-        // Change Alice's membershipType to VIP
-        const updatedMember = await Member.findOneAndUpdate(
-            { email: "alice@gym.com" }, 
-            { membershipType: "VIP" },
-            { new: true } // This option returns the updated document back to us
-        );
-        console.log(`\n🆙 Updated ${updatedMember.name}'s tier to: ${updatedMember.membershipType}`);
-
-        // ==========================================
-        // 4. DELETE (Remove Data)
-        // ==========================================
-        // If you ever need to remove a record:
-        // await Member.deleteOne({ email: "alice@gym.com" });
-        // console.log("🗑️ Member removed.");
-
+        res.status(201).json({ message: 'Registration successful!', memberId: newMember._id });
     } catch (error) {
-        console.error('❌ Database operation error:', error.message);
-    } finally {
-        // Optional: Close the connection when the script finishes its work
-        mongoose.connection.close();
-        console.log('\n🔒 Connection safely closed.');
+        res.status(500).json({ message: 'Server error during registration.', error: error.message });
     }
-  })
-  .catch(err => console.error('Database connection error:', err));
+});
+
+// ==========================================
+// ROUTE 2: LOGIN EXISTING USER
+// ==========================================
+app.post('/api/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        // 1. Find the user by email
+        const user = await Member.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ message: 'Invalid email or password.' });
+        }
+
+        // 2. Compare typed password with the scrambled password in MongoDB
+        const isMatch = await bcrypt.compare(password, user.passwordHash);
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Invalid email or password.' });
+        }
+
+        // 3. Create a secure login token
+        const token = jwt.sign(
+            { id: user._id, role: user.role },
+            process.env.JWT_SECRET,
+            { expiresIn: '1d' }
+        );
+
+        // 4. Send token and user role back to the frontend
+        res.json({
+            message: 'Login successful!',
+            token,
+            role: user.role,
+            name: user.name
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error during login.', error: error.message });
+    }
+});
+
+// Start the server on Port 3000
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`🚀 Server is running on http://localhost:${PORT}`);
+});
