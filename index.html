@@ -1,47 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
     <meta charset="UTF-8">
-    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link rel="stylesheet" href="style.css">
-   <div class="logo">
-        <img src="" alt="Gym App Logo">
-        <h1>Gym App</h1>
-    </div>
+    <title>Gym App</title>
 
+    <!-- CHANGED: the font is loaded here instead of three @import lines in the CSS (faster) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
 </head>
 
-
 <body class="login-page">
-    <form id="login-form">
-        <div class="email-input">
-            <label for="email">Email:</label>
-            <input 
-            type="email"
-            id="email"
-            name="email"
-            autocomplete="email"
-            required>
+
+    <!-- ADDED: main wraps all the visible content -->
+    <main>
+
+        <!-- CHANGED: the logo block now lives in the body, above the form -->
+        <div class="logo">
+            <!-- CHANGED: real image path and a real description -->
+            <img src="image/GymWrath.svg" alt="Gym Wrath logo">
+            <h1>Gym App</h1>
         </div>
-    <div class="password-input">
-        <label for="password">Password:</label>
-        <input 
-            type="password"
-            id="password"
-            name="password"
-            autocomplete="current-password"
-            required>
-    </div>
-    <button type="submit">Login</button>
-    </form>
 
-<script src="script.js"></script>    
+        <form id="login-form">
+            <div class="email-input">
+                <label for="email">Email:</label>
+                <!-- CHANGED: autocomplete is "username" so password managers pair it with the password -->
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    autocomplete="username"
+                    required>
+            </div>
+
+            <div class="password-input">
+                <label for="password">Password:</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    autocomplete="current-password"
+                    required>
+            </div>
+
+            <!-- CHANGED: the button has a class, so the CSS can find it directly -->
+            <button type="submit" class="btn">Login</button>
+        </form>
+
+    </main>
+
+    <!-- CHANGED: defer = run after the page has loaded -->
+    <script src="script.js" defer></script>
 </body>
-
-
 
 </html>
