@@ -1,0 +1,125 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600&display=swap");
+:root {
+  --bg: #050508;
+  --green: #0a8f0a;
+  --teal: #0f6b66;
+  --teal-dark: #0a4f4b;
+  --text-muted: #b9b9c0;
+  --font: "Oswald", system-ui, sans-serif;
+}
+
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: #000;
+}
+
+body.login-page {
+  max-width: 390px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 56px 24px 40px;
+  background: var(--bg);
+  font-family: var(--font);
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+}
+
+
+.logo img {
+  display: none;
+}
+
+.logo::before {
+  content: "";
+  display: block;
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+  background: url("image/GymWrath.svg") center / contain no-repeat;
+}
+
+
+
+body > div:not(.logo) {
+  margin-bottom: 20px;
+}
+
+
+input {
+  display: block;
+  width: calc(100% - 25px);
+  height: 40px;
+  margin-left: 25px;
+  padding: 0 13px;
+  border: 0;
+  border-radius: 8px;
+  background: #fff;
+  color: #1c1c22;
+  font: 500 13px var(--font);
+}
+
+input::placeholder {
+  color: #9a9aa3;
+}
+
+body > button {
+  order: 1;                 
+  align-self: flex-end;     
+  margin: -6px 0 32px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: 500 13px var(--font);
+  color: var(--green);
+  cursor: pointer;
+}
+
+body > div:last-of-type {
+  order: 2;                 
+  margin-bottom: 0;
+}
+
+body > div button {
+  display: block;
+  width: calc(100% - 25px);
+  height: 40px;
+  margin-left: 25px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--teal-dark);
+  color: var(--green);
+  font: 600 14px var(--font);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+body > div button:hover {
+  background: var(--teal);
+}
+
+
+input:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+
+@media (max-width: 360px) {
+  input,
+  body > div button {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+body.login-page label {
+  color: var(--green);
+}
