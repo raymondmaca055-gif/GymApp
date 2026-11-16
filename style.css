@@ -1,7 +1,14 @@
+/* =====================================================================
+   style.css - Gym App login page (fixed version of the team's file)
+   Lines marked CHANGED or NEW are where this differs from your file.
+   ===================================================================== */
 
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600&display=swap");
+/* CHANGED: the three @import lines are gone. The font is now loaded
+   with a <link> in index.html, which is faster. */
+
+
+/* ---------- 1. Tokens (your colors, plus two new sizes) ---------- */
+
 :root {
   --bg: #050508;
   --green: #0a8f0a;
@@ -9,8 +16,13 @@
   --teal-dark: #0a4f4b;
   --text-muted: #b9b9c0;
   --font: "Oswald", system-ui, sans-serif;
+
+  --logo-size: 180px;       /* NEW: change this one number to resize the logo */
+  --field-height: 48px;     /* NEW: used by the inputs and the Login button */
 }
 
+
+/* ---------- 2. Page basics ---------- */
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -23,6 +35,7 @@ html {
 body.login-page {
   max-width: 390px;
   min-height: 100vh;
+  min-height: 100dvh;        /* NEW: the real visible height on phones */
   margin: 0 auto;
   padding: 56px 24px 40px;
   background: var(--bg);
@@ -32,65 +45,79 @@ body.login-page {
   flex-direction: column;
 }
 
+/* CHANGED: no more "order" rules. Items now follow the HTML order,
+   so the logo comes first and the form second. */
 
+
+/* ---------- 3. Logo ---------- */
+
+.logo {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+/* CHANGED: a real <img> styled directly. This replaces the two hack rules
+   (.logo img { display: none } and .logo::before { ... 300px ... }). */
 .logo img {
-  display: none;
-}
-
-.logo::before {
-  content: "";
   display: block;
-  width: 300px;
-  height: 300px;
+  width: var(--logo-size);
+  max-width: 100%;
+  height: auto;
   margin: 0 auto;
-  background: url("image/GymWrath.svg") center / contain no-repeat;
+}
+
+/* NEW: the title sits under a centered logo, so it is centered too */
+body.login-page h1 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 32px;
+  font-size: 24px;
+  color: var(--green);
 }
 
 
+/* ---------- 4. Fields ---------- */
 
-body > div:not(.logo) {
+
+.email-input,
+.password-input {
   margin-bottom: 20px;
 }
 
+body.login-page label {
+  display: block;            /* NEW: label on its own line, with a small gap */
+  margin-bottom: 6px;
+  color: var(--green);
+}
 
-input {
+/* CHANGED: was "input". Now it skips checkboxes, so the checkbox you add
+   later will not turn into a big white box. Height is 48 and text is 16 px
+   (under 16 px, iPhones zoom in when you tap the box). */
+input:not([type="checkbox"]) {
   display: block;
   width: calc(100% - 25px);
-  height: 40px;
+  height: var(--field-height);
   margin-left: 25px;
   padding: 0 13px;
   border: 0;
   border-radius: 8px;
   background: #fff;
   color: #1c1c22;
-  font: 500 13px var(--font);
+  font: 500 16px var(--font);
 }
 
 input::placeholder {
   color: #9a9aa3;
 }
 
-body > button {
-  order: 1;                 
-  align-self: flex-end;     
-  margin: -6px 0 32px;
-  padding: 0;
-  border: 0;
-  background: none;
-  font: 500 13px var(--font);
-  color: var(--green);
-  cursor: pointer;
-}
 
-body > div:last-of-type {
-  order: 2;                 
-  margin-bottom: 0;
-}
+/* ---------- 5. Login button ---------- */
 
-body > div button {
+
+.btn {
   display: block;
   width: calc(100% - 25px);
-  height: 40px;
+  height: var(--field-height);
   margin-left: 25px;
   border: 0;
   border-radius: 999px;
@@ -101,10 +128,12 @@ body > div button {
   transition: background 0.15s;
 }
 
-body > div button:hover {
+.btn:hover {
   background: var(--teal);
 }
 
+
+/* ---------- 6. Keyboard focus ---------- */
 
 input:focus-visible,
 button:focus-visible {
@@ -112,14 +141,13 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
+
+/* ---------- 7. Very small phones ---------- */
+
 @media (max-width: 360px) {
-  input,
-  body > div button {
+  input:not([type="checkbox"]),
+  .btn {                      /* CHANGED: same selector fixes as above */
     margin-left: 0;
     width: 100%;
   }
-}
-
-body.login-page label {
-  color: var(--green);
 }
