@@ -8,7 +8,7 @@
 
     <!-- CHANGED: the font is loaded here instead of three @import lines in the CSS (faster) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
@@ -46,9 +46,12 @@
                     name="password"
                     autocomplete="current-password"
                     required>
+        
             </div>
 
             <!-- CHANGED: the button has a class, so the CSS can find it directly -->
+            <p id="message" aria-live="polite"></p>
+
             <button type="submit" class="btn">Login</button>
         </form>
 

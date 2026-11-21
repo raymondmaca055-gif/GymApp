@@ -10,7 +10,7 @@
 /* ---------- 1. Tokens (your colors, plus two new sizes) ---------- */
 
 :root {
-  --bg: #050508;
+  --bg: #a9dda7;
   --green: #0a8f0a;
   --teal: #0f6b66;
   --teal-dark: #0a4f4b;
@@ -151,3 +151,4 @@ button:focus-visible {
     width: 100%;
   }
 }
+
