@@ -152,3 +152,68 @@ button:focus-visible {
   }
 }
 
+/* ---------- Shared Dashboard Layout ---------- */
+
+body.dashboard {
+  font-family: var(--font);
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "sidebar header"
+    "sidebar main";
+}
+
+.dashboard header {
+  grid-area: header;
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dashboard header p {
+  color: var(--role-accent);
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.dashboard .role-badge {
+  font-size: 0.85rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid var(--role-accent);
+  color: var(--role-accent);
+}
+
+.dashboard .sidebar {
+  grid-area: sidebar;
+  background-color: var(--bg-sidebar);
+  border-right: 1px solid var(--border-subtle);
+  padding: 1rem;
+}
+
+.dashboard .sidebar-head img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  display: block;
+}
+
+/* ---------- Role-Specific Accent Tones ---------- */
+
+body.admin-dashboard {
+  --role-accent: #22c55e; /* Bright green for Admin */
+}
+
+body.user-dashboard {
+  --role-accent: #4ade80; /* Lighter/softer green for User */
+}
