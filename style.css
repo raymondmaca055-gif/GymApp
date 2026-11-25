@@ -1,13 +1,8 @@
 /* =====================================================================
-   style.css - Gym App login page (fixed version of the team's file)
-   Lines marked CHANGED or NEW are where this differs from your file.
+   style.css - Gym App (Login Page + Admin/User Dashboard)
    ===================================================================== */
 
-/* CHANGED: the three @import lines are gone. The font is now loaded
-   with a <link> in index.html, which is faster. */
-
-
-/* ---------- 1. Tokens (your colors, plus two new sizes) ---------- */
+/* ---------- 1. Tokens ---------- */
 
 :root {
   --bg: #a9dda7;
@@ -17,10 +12,9 @@
   --text-muted: #b9b9c0;
   --font: "Oswald", system-ui, sans-serif;
 
-  --logo-size: 180px;       /* NEW: change this one number to resize the logo */
-  --field-height: 48px;     /* NEW: used by the inputs and the Login button */
+  --logo-size: 180px;
+  --field-height: 48px;
 }
-
 
 /* ---------- 2. Page basics ---------- */
 
@@ -35,7 +29,7 @@ html {
 body.login-page {
   max-width: 390px;
   min-height: 100vh;
-  min-height: 100dvh;        /* NEW: the real visible height on phones */
+  min-height: 100dvh;
   margin: 0 auto;
   padding: 56px 24px 40px;
   background: var(--bg);
@@ -45,20 +39,14 @@ body.login-page {
   flex-direction: column;
 }
 
-/* CHANGED: no more "order" rules. Items now follow the HTML order,
-   so the logo comes first and the form second. */
+/* ---------- 3. Login Logo ---------- */
 
-
-/* ---------- 3. Logo ---------- */
-
-.logo {
+.login-page .logo {
   margin-bottom: 32px;
   text-align: center;
 }
 
-/* CHANGED: a real <img> styled directly. This replaces the two hack rules
-   (.logo img { display: none } and .logo::before { ... 300px ... }). */
-.logo img {
+.login-page .logo img {
   display: block;
   width: var(--logo-size);
   max-width: 100%;
@@ -66,7 +54,6 @@ body.login-page {
   margin: 0 auto;
 }
 
-/* NEW: the title sits under a centered logo, so it is centered too */
 body.login-page h1 {
   text-align: center;
   margin-top: 0;
@@ -75,25 +62,20 @@ body.login-page h1 {
   color: var(--green);
 }
 
+/* ---------- 4. Login Fields ---------- */
 
-/* ---------- 4. Fields ---------- */
-
-
-.email-input,
-.password-input {
+.login-page .email-input,
+.login-page .password-input {
   margin-bottom: 20px;
 }
 
 body.login-page label {
-  display: block;            /* NEW: label on its own line, with a small gap */
+  display: block;
   margin-bottom: 6px;
   color: var(--green);
 }
 
-/* CHANGED: was "input". Now it skips checkboxes, so the checkbox you add
-   later will not turn into a big white box. Height is 48 and text is 16 px
-   (under 16 px, iPhones zoom in when you tap the box). */
-input:not([type="checkbox"]) {
+.login-page input:not([type="checkbox"]) {
   display: block;
   width: calc(100% - 25px);
   height: var(--field-height);
@@ -106,15 +88,13 @@ input:not([type="checkbox"]) {
   font: 500 16px var(--font);
 }
 
-input::placeholder {
+.login-page input::placeholder {
   color: #9a9aa3;
 }
 
+/* ---------- 5. Login Button ---------- */
 
-/* ---------- 5. Login button ---------- */
-
-
-.btn {
+.login-page .btn {
   display: block;
   width: calc(100% - 25px);
   height: var(--field-height);
@@ -128,12 +108,11 @@ input::placeholder {
   transition: background 0.15s;
 }
 
-.btn:hover {
+.login-page .btn:hover {
   background: var(--teal);
 }
 
-
-/* ---------- 6. Keyboard focus ---------- */
+/* ---------- 6. Keyboard Focus ---------- */
 
 input:focus-visible,
 button:focus-visible {
@@ -141,79 +120,194 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
-
-/* ---------- 7. Very small phones ---------- */
+/* ---------- 7. Very Small Phones ---------- */
 
 @media (max-width: 360px) {
-  input:not([type="checkbox"]),
-  .btn {                      /* CHANGED: same selector fixes as above */
+  .login-page input:not([type="checkbox"]),
+  .login-page .btn {
     margin-left: 0;
     width: 100%;
   }
 }
 
-/* ---------- Shared Dashboard Layout ---------- */
+/* Admin Dashboard */
 
 body.dashboard {
-  font-family: var(--font);
-  background-color: var(--bg-main);
-  color: var(--text-primary);
+  margin: 0;
   min-height: 100vh;
   min-height: 100dvh;
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  grid-template-rows: auto 1fr;
-  grid-template-areas:
-    "sidebar header"
-    "sidebar main";
+  background-color: #eef2f6;
+  font-family: var(--font);
 }
 
-.dashboard header {
-  grid-area: header;
-  background-color: var(--bg-surface);
-  border-bottom: 1px solid var(--border-subtle);
-  padding: 1rem 1.5rem;
+.sidebar {
+  width: 270px;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  border-radius: 16px;
+  background: #0f172a;
+  height: calc(100vh - 20px);
+  transition: width 0.4s ease;
+}
+
+.sidebar.collapsed {
+  width: 80px;
+}
+
+.sidebar.collapsed .nav-label {
+  display: none;
+}
+
+.sidebar-head {
   display: flex;
+  padding: 20px 16px;
   align-items: center;
   justify-content: space-between;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
-.dashboard header p {
-  color: var(--role-accent);
-  font-weight: 600;
-  font-size: 1.5rem;
-}
-
-.dashboard .role-badge {
-  font-size: 0.85rem;
-  padding: 0.25rem 0.65rem;
-  border-radius: 999px;
-  border: 1px solid var(--role-accent);
-  color: var(--role-accent);
-}
-
-.dashboard .sidebar {
-  grid-area: sidebar;
-  background-color: var(--bg-sidebar);
-  border-right: 1px solid var(--border-subtle);
-  padding: 1rem;
-}
-
-.dashboard .sidebar-head img {
-  width: 48px;
-  height: 48px;
-  object-fit: contain;
+.sidebar-head .logo img {
+  width: 64px;
+  height: auto;
   display: block;
+  object-fit: contain;
 }
 
-/* ---------- Role-Specific Accent Tones ---------- */
+.sidebar.collapsed .sidebar-head {
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 8px;
+}
 
+.sidebar.collapsed .sidebar-head .logo img {
+  width: 44px;
+}
+
+.sidebar-head .toggler {
+  height: 34px;
+  width: 34px;
+  flex-shrink: 0;
+  border: none;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 6px;
+  background: whitesmoke;
+  transition: transform 0.4s ease, background 0.2s ease;
+}
+
+.sidebar-header .sidebar-toggler{
+  position: absolute;
+  right: 20px;
+}
+
+.sidebar-head .sidebar-toggler .material-symbols-rounded {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.sidebar-header .menu-toggler{
+  display: none;
+
+}
+.sidebar.collapsed .sidebar-head .sidebar-toggler span {
+  transform: rotate(180deg);
+}
+
+.sidebar-nav .nav-list {
+  list-style: none;
+  display: flex;
+  gap: 6px;
+  padding: 0 12px;
+  margin: 0;
+  flex-direction: column;
+  transform: translateY(15px);
+  transition: transform 0.4s ease;
+}
+
+.sidebar.collapsed .sidebar-nav .primary-nav {
+  align-items: center;
+}
+
+.sidebar-nav .nav-link {
+  color: whitesmoke;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-nav .nav-link:hover {
+  color: #000;
+  background: white;
+}
+
+.sidebar-nav .secondary-nav {
+  position: absolute;
+  bottom: 30px;
+  width: 100%;
+}
+
+/* Role accents */
 body.admin-dashboard {
-  --role-accent: #22c55e; /* Bright green for Admin */
+  --role-accent: #90B800;
 }
 
 body.user-dashboard {
-  --role-accent: #4ade80; /* Lighter/softer green for User */
+  --role-accent: #4ade80;
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    margin: 13px;
+    width: calc(100% - 28px);
+  }
+.sidebar.collapsed {
+    width: 80px;
+  }
+
+  .sidebar.collapsed .nav-label {
+    display: none;
+  }
+}
+
+.sidebar-header{
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background:#0f172a;
+  padding: 8px 10px;
+  border-radius: 16px;
+}
+
+.sidebar-header .logo img{
+  width: 40px;
+  height: 40px;
+}
+
+.sidebar-header .sidebar-toggler{
+  display: none;
+  
+}
+.sidebar-header .menu-toggler{
+  display: flex;
+  
+}
+
+.sidebar-nav .nav-list{
+  padding: 0 10px;
+}
+
+.sidebar-nav .nav-link {
+ gap: 10px;
+ padding: 10px;
+ font-size: 0.94rem;
+}
+.sidebar-nav .nav-link .nav-icon{
+  font-size: 1.37rem;
 }

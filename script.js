@@ -4,6 +4,17 @@ const passwordInput = document.getElementById("password");
 const messageEl = document.getElementById("message");
 
 
+const sidebar = document.querySelector(".sidebar");
+const togglers = document.querySelectorAll(".sidebar-toggler, .menu-toggler");
+
+if (sidebar && togglers.length > 0) {
+  togglers.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      sidebar.classList.toggle("collapsed");
+    });
+  });
+}
+
 if (loginForm) {
     loginForm.addEventListener("submit", async (event) => {
         event.preventDefault();
