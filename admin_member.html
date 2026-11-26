@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym App</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+    <!-- CHANGED: the font is loaded here instead of three @import lines in the CSS (faster) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />    
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard admin-dashboard"> 
+     <aside class = "sidebar">
+     <header class="sidebar-head">
+        <a href="#" class="logo">
+         <img src="image/GymWrath.svg" alt="Gym Wrath logo">
+        </a>
+        <button type="button" class="toggler menu-toggler" aria-label="Toggle menu">
+            <span class="material-symbols-rounded">menu</span>
+        </button>
+        </header>
+
+        <nav class="sidebar-nav">
+            <!--Top nav-->
+           <ul class="nav-list primary-nav">
+                <li class="nav-item">
+                    <a href="admindashboard.html" class="nav-link">
+                          <span class="nav-icon 
+                          material-symbols-rounded">dashboard</span>
+                          <span class="nav-label"> Dashboard</span>
+                    </a>
+                </li>     
+               
+                <li class="nav-item">
+                    <a href="admin_member.html" class="nav-link active">
+                          <span class="material-symbols-rounded">groups</span>
+                          <span class="nav-label"> Members</span>
+                    </a>
+                </li>     
+                <li class="nav-item">
+                    <a href="admin_attendance.html" class="nav-link">
+                          <span class="material-symbols-rounded">person</span>
+                          <span class="nav-label"> Attendance</span>
+                    </a>
+                </li>     <li class="nav-item">
+                    <a href="admin_QR.html" class="nav-link">
+                          <span class="material-symbols-rounded">qr_code_scanner</span>
+                          <span class="nav-label"> Gym QR code</span>
+                    </a>
+                </li>     <li class="nav-item">
+                    <a href="admin_routine.html" class="nav-link">
+                          <span class="material-symbols-rounded">assignment</span>
+                          <span class="nav-label"> Routine Plan</span>
+                    </a>
+                </li>     <li class="nav-item">
+                    <a href="admin_foodlist.html" class="nav-link">
+                          <span class="material-symbols-rounded">menu_book</span>
+                          <span class="nav-label"> FoodList</span>
+                    </a>
+                </li>     
+                <li class="nav-item">
+                    <a href="admin_settings.html" class="nav-link">
+                          <span class="material-symbols-rounded">settings</span>
+                          <span class="nav-label"> Settings</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="admin_logout.html" class="nav-link">
+                          <span class="material-symbols-rounded">logout</span>
+                          <span class="nav-label">Logout</span>
+                    </a>
+                </li>
+            </ul>        
+        </nav>
+     </aside>
+
+
+
+    <script src="script.js" defer></script>
+</body>
