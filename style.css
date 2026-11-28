@@ -1,313 +1,124 @@
-/* =====================================================================
-   style.css - Gym App (Login Page + Admin/User Dashboard)
-   ===================================================================== */
-
-/* ---------- 1. Tokens ---------- */
+/* Login page styles — targets your existing HTML as-is (body.login-page) */
 
 :root {
-  --bg: #a9dda7;
-  --green: #0a8f0a;
-  --teal: #0f6b66;
-  --teal-dark: #0a4f4b;
-  --text-muted: #b9b9c0;
-  --font: "Oswald", system-ui, sans-serif;
-
-  --logo-size: 180px;
-  --field-height: 48px;
+  --yellow: #FFF449;
+  --overlay: rgba(0, 0, 0, .68);
+  --ink: #1A1A1A;
+  --placeholder: #8A8A8A;
 }
 
-/* ---------- 2. Page basics ---------- */
-
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-html {
-  background: #000;
-}
+*, *::before, *::after { box-sizing: border-box; }
 
 body.login-page {
-  max-width: 390px;
+  margin: 0;
   min-height: 100vh;
-  min-height: 100dvh;
-  margin: 0 auto;
-  padding: 56px 24px 40px;
-  background: var(--bg);
-  font-family: var(--font);
-  color: var(--text-muted);
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  font-family: "Oswald", system-ui, sans-serif;
+  color: #fff;
+  background: #1b1b1b url("image/gym.jpg") center / cover no-repeat fixed;
+  position: relative;
 }
 
-/* ---------- 3. Login Logo ---------- */
+/* dark overlay over the photo */
+body.login-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: var(--overlay);
+  z-index: 0;
+}
 
+.login-page main {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 351px;
+  padding: 101px 0 40px;
+}
+
+/* ---------- Logo ---------- */
 .login-page .logo {
-  margin-bottom: 32px;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .login-page .logo img {
-  display: block;
-  width: var(--logo-size);
-  max-width: 100%;
+  width: 350px;
   height: auto;
-  margin: 0 auto;
+  display: block;
 }
 
-body.login-page h1 {
-  text-align: center;
-  margin-top: 0;
-  margin-bottom: 32px;
-  font-size: 24px;
-  color: var(--green);
-}
 
-/* ---------- 4. Login Fields ---------- */
+/* ---------- Form ---------- */
+.login-page #login-form {
+  margin-top: -50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .login-page .email-input,
 .login-page .password-input {
-  margin-bottom: 20px;
+  width: 240px;
+  margin-bottom: 17px;
 }
 
-body.login-page label {
+.login-page label {
   display: block;
-  margin-bottom: 6px;
-  color: var(--green);
+  margin: 0 0 3px 0px;          /* labels sit 24px left of the fields */
+  font-size: 17px;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 20px;
+  color: var(--yellow);
 }
 
-.login-page input:not([type="checkbox"]) {
-  display: block;
-  width: calc(100% - 25px);
-  height: var(--field-height);
-  margin-left: 25px;
-  padding: 0 13px;
+.login-page input[type="email"],
+.login-page input[type="password"],
+.login-page input[type="text"] {
+  width: 100%;
+  height: 30px;
+  padding: 0 12px;
   border: 0;
   border-radius: 8px;
   background: #fff;
-  color: #1c1c22;
-  font: 500 16px var(--font);
+  font: 400 12px "Manrope", system-ui, sans-serif;
+  color: var(--ink);
 }
 
-.login-page input::placeholder {
-  color: #9a9aa3;
-}
+.login-page input::placeholder { color: var(--placeholder); }
 
-/* ---------- 5. Login Button ---------- */
-
-.login-page .btn {
-  display: block;
-  width: calc(100% - 25px);
-  height: var(--field-height);
-  margin-left: 25px;
-  border: 0;
-  border-radius: 999px;
-  background: var(--teal-dark);
-  color: var(--green);
-  font: 600 14px var(--font);
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-.login-page .btn:hover {
-  background: var(--teal);
-}
-
-/* ---------- 6. Keyboard Focus ---------- */
-
-input:focus-visible,
-button:focus-visible {
-  outline: 2px solid var(--green);
+.login-page input:focus-visible {
+  outline: 2px solid var(--yellow);
   outline-offset: 2px;
 }
 
-/* ---------- 7. Very Small Phones ---------- */
-
-@media (max-width: 360px) {
-  .login-page input:not([type="checkbox"]),
-  .login-page .btn {
-    margin-left: 0;
-    width: 100%;
-  }
+/* status / error message from script.js */
+.login-page #message {
+  width: 240px;
+  min-height: 18px;
+  margin: 0 0 8px;
+  font-size: 13px;
+  text-align: center;
+  color: #ff6b6b;
 }
 
-/* Admin Dashboard */
-
-body.dashboard {
-  margin: 0;
-  min-height: 100vh;
-  min-height: 100dvh;
-  background-color: #eef2f6;
-  font-family: var(--font);
-}
-
-.sidebar {
-  width: 270px;
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  border-radius: 16px;
-  background: #0f172a;
-  height: calc(100vh - 20px);
-  transition: width 0.4s ease;
-}
-
-.sidebar.collapsed {
-  width: 80px;
-}
-
-.sidebar.collapsed .nav-label {
-  display: none;
-}
-
-.sidebar-head {
-  display: flex;
-  padding: 20px 16px;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.sidebar-head .logo img {
-  width: 64px;
-  height: auto;
-  display: block;
-  object-fit: contain;
-}
-
-.sidebar.collapsed .sidebar-head {
-  flex-direction: column;
-  gap: 10px;
-  padding: 16px 8px;
-}
-
-.sidebar.collapsed .sidebar-head .logo img {
-  width: 44px;
-}
-
-.sidebar-head .toggler {
-  height: 34px;
-  width: 34px;
-  flex-shrink: 0;
-  border: none;
-  color: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* ---------- Button ---------- */
+.login-page .btn {
+  width: 240px;
+  height: 50px;
+  margin-top: 5px;
+  border: 0;
+  border-radius: 31px;
+  background: var(--yellow);
+  font: 600 20px "Parkinsans", system-ui, sans-serif;
+  color: var(--ink);
   cursor: pointer;
-  border-radius: 6px;
-  background: whitesmoke;
-  transition: transform 0.4s ease, background 0.2s ease;
 }
 
-.sidebar-header .sidebar-toggler{
-  position: absolute;
-  right: 20px;
-}
-
-.sidebar-head .sidebar-toggler .material-symbols-rounded {
-  font-size: 1.4rem;
-  line-height: 1;
-}
-
-.sidebar-header .menu-toggler{
-  display: none;
-
-}
-.sidebar.collapsed .sidebar-head .sidebar-toggler span {
-  transform: rotate(180deg);
-}
-
-.sidebar-nav .nav-list {
-  list-style: none;
-  display: flex;
-  gap: 6px;
-  padding: 0 12px;
-  margin: 0;
-  flex-direction: column;
-  transform: translateY(15px);
-  transition: transform 0.4s ease;
-}
-
-.sidebar.collapsed .sidebar-nav .primary-nav {
-  align-items: center;
-}
-
-.sidebar-nav .nav-link {
-  color: whitesmoke;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 15px;
-  border-radius: 10px;
-  text-decoration: none;
-  transition: background 0.3s ease, color 0.3s ease;
-}
-
-.sidebar-nav .nav-link:hover {
-  color: #000;
-  background: white;
-}
-
-.sidebar-nav .secondary-nav {
-  position: absolute;
-  bottom: 30px;
-  width: 100%;
-}
-
-/* Role accents */
-body.admin-dashboard {
-  --role-accent: #90B800;
-}
-
-body.user-dashboard {
-  --role-accent: #4ade80;
-}
-
-@media (max-width: 1024px) {
-  .sidebar {
-    margin: 13px;
-    width: calc(100% - 28px);
-  }
-.sidebar.collapsed {
-    width: 80px;
-  }
-
-  .sidebar.collapsed .nav-label {
-    display: none;
-  }
-}
-
-.sidebar-header{
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  background:#0f172a;
-  padding: 8px 10px;
-  border-radius: 16px;
-}
-
-.sidebar-header .logo img{
-  width: 40px;
-  height: 40px;
-}
-
-.sidebar-header .sidebar-toggler{
-  display: none;
-  
-}
-.sidebar-header .menu-toggler{
-  display: flex;
-  
-}
-
-.sidebar-nav .nav-list{
-  padding: 0 10px;
-}
-
-.sidebar-nav .nav-link {
- gap: 10px;
- padding: 10px;
- font-size: 0.94rem;
-}
-.sidebar-nav .nav-link .nav-icon{
-  font-size: 1.37rem;
-}
+.login-page .btn:hover { filter: brightness(.96); }
+.login-page .btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.login-page .btn:disabled { opacity: .6; cursor: not-allowed; }
